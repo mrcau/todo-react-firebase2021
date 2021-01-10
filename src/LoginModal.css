@@ -1,0 +1,110 @@
+/* 모달창 */
+.loginModal {
+  position: absolute;
+  width: 60%;
+  height: 300px;
+  top : 50%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  border-radius: 12px;
+  padding: 3vh;
+  background: white;
+  box-shadow: 10px 10px 21px -8px rgba(0, 0, 0, 0.75);
+  overflow: hidden;
+  transition: all 300ms;
+}
+/* .modal {
+  display: block;
+  top: 30vh;
+  position: absolute;
+} */
+.close{
+  padding: 0;
+  width:30px;
+  height:30px;
+  background:transparent;
+  position:absolute;
+  font-size: 20px;
+  top:3px;
+  right: 3px;
+  cursor: pointer;
+  color:var(--Acolor);
+}
+.close:hover{
+  background: transparent;
+  color:var(--Bcolor);
+}
+
+.loginModal::before {
+  content: "login";
+  display: block;
+  margin-bottom: 10px;
+  font-size: 1.6rem;
+  font-weight: 900;
+  color: var(--Acolor);
+}
+.loginModal form {
+  height: 50%;
+  background: transparent;
+  display: grid;
+  gap: 5px;
+  align-items: center;
+  grid-template-columns: 40px 1fr;
+  border: none;
+  margin-bottom: 15px;
+}
+.loginModal input {
+  width: 100%;
+  border: none;
+  border-bottom: 1px dashed var(--Acolor);
+  outline: none;
+  text-align: left;
+}
+.bntLG {
+  display: flex;
+  width: 100%;
+  margin: auto;
+}
+.btnRegister {
+  width: 45%;
+  border-radius: 1rem;
+}
+.modalLogin {
+  width: 100%;
+  border-radius: 1rem;
+}
+.btnGoogle {
+  color: var(--Acolor);
+  font-size: 30px;
+  transition: all 300ms;
+  background: transparent;
+  width: auto;
+  padding: 0;
+  transition: all 300ms;
+  display: block;
+  margin: auto;
+}
+.btnGoogle:hover {
+  color: var(--Bcolor);
+  transform: scale(1.2);
+  background: transparent;
+}
+.btnGoogle:active {
+  color: var(--Acolor);
+  background: transparent;
+}
+
+.loginAlert {
+  font-size: 14px;
+  transition: all 300ms;
+  color: var(--Acolor);
+}
+.alert {
+  opacity: 1;
+}
+
+.btnG {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
