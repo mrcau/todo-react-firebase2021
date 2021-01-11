@@ -1,8 +1,6 @@
-
 import { useEffect, useRef, useState } from 'react';
 import './App.css';
 import './LoginModal.css';
-
 import LoginModal from './LoginModal';
 
 
@@ -61,7 +59,7 @@ useEffect(()=>{
        </main>
        <footer>Togo Factory</footer>
        {
-         loginModal && <LoginModal fireApp={fireApp} setLoginModal={setLoginModal}/>
+         loginModal && <LoginModal fireApp={fireApp} firebase={firebase} setLoginModal={setLoginModal}/>
        }
     </div>
   );

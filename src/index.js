@@ -4,6 +4,7 @@ import './index.css';
 import App from './App';
 import {fire, firebase} from './firebase';
 import '@fortawesome/fontawesome-free/js/all.js'; 
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const fireApp = new fire();
 ReactDOM.render(

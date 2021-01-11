@@ -13,7 +13,10 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 
 class fire{
-
+ 
+  createUser(email,password){
+    firebase.auth().createUserWithEmailAndPassword(email,password);
+  }
 
    async emailLogin(Email,Pass) {
     // const Email = loginEmail.value;
