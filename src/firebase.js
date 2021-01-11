@@ -14,24 +14,19 @@ firebase.initializeApp(firebaseConfig);
 
 class fire{
  
-  createUser(email,password){
-    firebase.auth().createUserWithEmailAndPassword(email,password);
+  async createUser(info,nameRegister,cf){
+    try { await firebase.auth().createUserWithEmailAndPassword(info[0],info[1]);
+          await firebase.auth().currentUser.updateProfile({displayName:nameRegister});
+    cf.displayName();
+    cf.closeModal();
+    }
+    catch(error){
+      alert(error);
+    }
   }
 
-   async emailLogin(Email,Pass) {
-    // const Email = loginEmail.value;
-    // const Pass = loginPass.value;
-    firebase
-      .auth()
-      .signInWithEmailAndPassword(Email, Pass)
-      // .then((user) => {
-      //   console.log('success');
-      // })
-      // .catch((error) => {
-      //   var errorMessage = error.message;
-      //   console.log(errorMessage);
-      //   return errorMessage;
-      // });
+   emailLogin(Email,Pass) {
+    firebase.auth().signInWithEmailAndPassword(Email, Pass)
   }
 
   login(){
@@ -41,11 +36,11 @@ class fire{
   logout(){
     firebase.auth().signOut();
   }
+
+  updatePro(name){
+  }
   onAuth(cf){
     firebase.auth().onAuthStateChanged(e=>cf(e))
-  }
-  onUser(){
-    firebase.auth().currentUser();
   }
 }
 

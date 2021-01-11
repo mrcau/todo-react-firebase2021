@@ -3,14 +3,8 @@ html {
   --Bcolor: #d7c49e;
 }
 * {
-  box-sizing: border-box;
   margin: 0;
   text-align: center;
-}
-body {
-  width: 100%;
-  height: 100%;
-  background: var(--Bcolor);
 }
 .App {
   position: absolute;
@@ -20,14 +14,14 @@ body {
   width: 90%;
   margin: auto;
   background: var(--Bcolor);
-  height: 80%;
+  height: 90%;
   border-radius: 1rem;
   display: flex;
   flex-direction: column;
   border: 2px solid var(--Acolor);
   overflow: hidden;
 }
-header {
+.header {
   padding-bottom: 0.3rem;
   font-weight: bold;
   color: var(--Bcolor);
@@ -41,26 +35,34 @@ header {
   display: table-cell;
   vertical-align: middle;
 }
-main {
+#section {
   flex: auto;
-  display: flex;
+  display: flex ;
   flex-direction: column;
-  position: relative;
+  /* position: relative; */
 }
-.items {
-  flex: auto;
+#items {
+  flex:  auto;
   display: grid;
   gap: 5px;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   grid-template-rows: repeat(auto-fill, 70px);
   padding: 10px;
-  min-height: 300px;
   overflow-y: auto;
 }
-form {
-  margin-top: 10px;
+#items::-webkit-scrollbar {
+  width: 4px;
 }
-footer {
+#items::-webkit-scrollbar-thumb {
+  width: thin;
+  background-color: var(--Acolor);
+  border-radius: 2px;
+  /* .items::-webkit-scrollbar-track {
+   background: var(--Bcolor);
+  } */
+}
+
+.footer {
   background: var(--Acolor);
   border-radius: 0 0 0.9rem 0.7rem;
   color: var(--Bcolor);
@@ -68,17 +70,6 @@ footer {
   padding: 4px;
   font-size: 1rem;
 }
-.items::-webkit-scrollbar {
-  width: 4px;
-}
-.items::-webkit-scrollbar-thumb {
-  width: thin;
-  background-color: var(--Acolor);
-  border-radius: 2px;
-}
-/* .items::-webkit-scrollbar-track {
- background: var(--Bcolor);
-} */
 
 .itemrow {
   border: 1px solid var(--Acolor);

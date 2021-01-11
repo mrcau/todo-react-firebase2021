@@ -3,7 +3,7 @@ import { Button, Form } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 
 
-function LoginModal({ fireApp, setLoginModal,firebase }) {
+function LoginModal({ fireApp, setUserName, setLoginModal,firebase }) {
   const emailRef = useRef();
   const passRef = useRef();
   const emailRegisterRef = useRef();
@@ -33,22 +33,21 @@ function LoginModal({ fireApp, setLoginModal,firebase }) {
   }
 
   // 회원가입
-  const onSubmit = (e) => {
-  const emailRegister = emailRegisterRef.current.value;
-  const nameRegister = nameRegisterRef.current.value;
-  const passRegister = passRegisterRef.current.value;
-	e.preventDefault();
- let createuser= firebase
- .auth()
- .createUserWithEmailAndPassword(emailRegister,passRegister);
- console.log(createuser);
+  const onSubmit = async (e) => {
+    e.preventDefault();
+    const registerInfo = [emailRegisterRef.current.value, passRegisterRef.current.value]
+    const nameRegister = nameRegisterRef.current.value;
+    const cf = {displayName : ()=>setUserName(nameRegister), 
+                closeModal : ()=>setLoginModal(false)}
+   await fireApp.createUser(registerInfo,nameRegister,cf);
+ 
 }
   return (
     <div className="loginModal">
       {/* LoginModal */}
       {!registerTF &&
         <div className="auth">
-        <h3>로그인</h3>
+        <h4>로그인</h4>
           <Form onSubmit={emailLogin}>
             <Form.Group controlId="formBasicEmail" className="formGroup" >
               <Form.Label className="formLabel"><i className="far fa-envelope" /></Form.Label>
@@ -69,7 +68,7 @@ function LoginModal({ fireApp, setLoginModal,firebase }) {
 
       {/* Register */}
       <div className="auth" style={{ display: !registerTF && 'none' }}>
-      <h3>회원가입</h3>
+      <h4>회원가입</h4>
         <Form onSubmit={onSubmit}>
           <Form.Group controlId="formBasicEmail" className="formGroup" >
             <Form.Label className="formLabel"><i className="far fa-smile" /></Form.Label>
@@ -87,7 +86,6 @@ function LoginModal({ fireApp, setLoginModal,firebase }) {
             <Form.Label className="formLabel"><i className="fas fa-unlock-alt" /></Form.Label>
             <Form.Control className="formInput" type="password"ref={repassRegisterRef} placeholder="패스워드 확인" />
           </Form.Group>
-
           <Button variant="primary" type="submit">
             Submit
           </Button>

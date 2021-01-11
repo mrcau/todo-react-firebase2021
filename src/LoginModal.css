@@ -31,7 +31,7 @@
 
 /* 모달내부 */
 
-.loginModal h3{
+.loginModal h4{
   font-weight:900;
   color:var(--Acolor);
   padding-bottom: 30px;
