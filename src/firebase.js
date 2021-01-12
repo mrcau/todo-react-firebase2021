@@ -12,36 +12,66 @@ const firebaseConfig = {
 };
 firebase.initializeApp(firebaseConfig);
 
-class fire{
- 
-  async createUser(info,nameRegister,cf){
-    try { await firebase.auth().createUserWithEmailAndPassword(info[0],info[1]);
-          await firebase.auth().currentUser.updateProfile({displayName:nameRegister});
-    cf.displayName();
-    cf.closeModal();
+class fire {
+  
+  //회원가입
+  async createUser(info, cf) {
+    try {
+      await firebase.auth()
+        .createUserWithEmailAndPassword(info.email, info.pass)
+        .then((e) => {
+          firebase.database().ref(`auth/${e.user.uid}`).set(info)
+          .then(() => console.log('회원정보 저장성공'))
+          .catch((e) => console.log(e))
+        })
+      await firebase.auth().currentUser.updateProfile({ displayName: info.name });
+      cf.displayName();
+      cf.closeModal();
+      console.log('회원가입 완료');
     }
-    catch(error){
+    catch (error) {
       alert(error);
     }
   }
-
-   emailLogin(Email,Pass) {
+  // 이메일로그인
+  emailLogin(Email, Pass) {
     firebase.auth().signInWithEmailAndPassword(Email, Pass)
+      .then(() => console.log('success'))
+      .catch((error) => {
+        var errorMessage = error.message;
+        alert(errorMessage);
+      });
   }
-
-  login(){
+  // 구글로그인
+  login() {
     const provider = new firebase.auth.GoogleAuthProvider();
     return firebase.auth().signInWithPopup(provider);
   }
-  logout(){
+  logout() {
     firebase.auth().signOut();
   }
+  // 글 데이터저장 
+  dataSave(data) {
+    firebase.database().ref(`items/${data.uid}/${data.dataId}`).set(data)
+      .then(() => console.log('글 저장성공'))
+      .catch((e) => console.log(e))
+  }
+  //회원정보 SYNC
+  async onAuth(cf) {
+  firebase.auth().onAuthStateChanged(e => cf(e));
 
-  updatePro(name){
   }
-  onAuth(cf){
-    firebase.auth().onAuthStateChanged(e=>cf(e))
+  // 데이터 SYNC
+ itemSync(uid,cf){
+    const ref = firebase.database().ref(`items/${uid}`);
+    ref.on('value',(p) => {
+      const data = p.val();
+      data && cf(data)
+    })
+
   }
+
+
 }
 
-export {fire, firebase}
+export { fire, firebase }

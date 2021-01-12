@@ -13,17 +13,19 @@ function LoginModal({ fireApp, setUserName, setLoginModal,firebase }) {
   const [registerTF, setRegisterTF] = useState(false);
 
   // 이메일로그인
-  const emailLogin = () => {
+  const emailLogin = (e) => {
+    e.preventDefault();
     const email = emailRef.current.value;
     const pass = passRef.current.value;
-    fireApp.emailLogin(email, pass)
-      .then((user) => {
-        console.log('success');
-      })
-      .catch((error) => {
-        var errorMessage = error.message;
-        console.log(errorMessage);
-      });
+    fireApp.emailLogin(email,pass)
+    //   .then((user) => {
+    //     console.log('success');
+    //   })
+    //   .catch((error) => {
+    //     var errorMessage = error.message;
+    //     console.log(errorMessage);
+    //   });
+    // console.log(email,pass);
   }
 
   // 구글로그인
@@ -35,13 +37,16 @@ function LoginModal({ fireApp, setUserName, setLoginModal,firebase }) {
   // 회원가입
   const onSubmit = async (e) => {
     e.preventDefault();
-    const registerInfo = [emailRegisterRef.current.value, passRegisterRef.current.value]
-    const nameRegister = nameRegisterRef.current.value;
-    const cf = {displayName : ()=>setUserName(nameRegister), 
+    const registerInfo = {
+      name : nameRegisterRef.current.value,
+      email : emailRegisterRef.current.value, 
+      pass : passRegisterRef.current.value
+    }
+    const cf = {displayName : ()=>setUserName(registerInfo.name), 
                 closeModal : ()=>setLoginModal(false)}
-   await fireApp.createUser(registerInfo,nameRegister,cf);
- 
+   fireApp.createUser(registerInfo,cf)
 }
+
   return (
     <div className="loginModal">
       {/* LoginModal */}
@@ -60,7 +65,7 @@ function LoginModal({ fireApp, setUserName, setLoginModal,firebase }) {
             <Button variant="primary" type="submit"> 로그인</Button>
           </Form>          
           <button className="btnGoogle" style={{background:"white"}} onClick={googleLogin} >
-          <i class="fab fa-google-plus"/></button>
+          <i className="fab fa-google-plus"/></button>
           <button className="btnRegister" style={{background:"white"}} onClick={() => setRegisterTF(true)} >
           아이디가 없다면...</button>
         </div>
