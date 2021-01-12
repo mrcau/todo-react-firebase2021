@@ -12,36 +12,49 @@ const firebaseConfig = {
 };
 firebase.initializeApp(firebaseConfig);
 
-class fire{
- 
-  async createUser(info,nameRegister,cf){
-    try { await firebase.auth().createUserWithEmailAndPassword(info[0],info[1]);
-          await firebase.auth().currentUser.updateProfile({displayName:nameRegister});
-    cf.displayName();
-    cf.closeModal();
+class fire {
+
+  async createUser(info,cf) {
+    try {
+      await firebase.auth()
+      .createUserWithEmailAndPassword(info.email, info.pass);
+      await firebase.auth().currentUser.updateProfile({ displayName: info.name });
+      cf.displayName();
+      cf.closeModal();
+      
     }
-    catch(error){
+    catch (error) {
       alert(error);
     }
   }
 
-   emailLogin(Email,Pass) {
+  emailLogin(Email, Pass) {
     firebase.auth().signInWithEmailAndPassword(Email, Pass)
+      .then(() => console.log('success'))
+      .catch((error) => {
+        var errorMessage = error.message;
+        alert(errorMessage);
+      });
   }
-
-  login(){
+// 구글로그인
+  login() {
     const provider = new firebase.auth.GoogleAuthProvider();
     return firebase.auth().signInWithPopup(provider);
   }
-  logout(){
+  logout() {
     firebase.auth().signOut();
   }
 
-  updatePro(name){
+   itemSave(info) {
+    firebase.database().ref(`items/${info.uid}`).set(info)
+    .then(()=>console.log('저장성공'))
+    .catch((e)=>console.log(e)) 
+    
   }
-  onAuth(cf){
-    firebase.auth().onAuthStateChanged(e=>cf(e))
+
+  onAuth(cf) {
+    firebase.auth().onAuthStateChanged(e => cf(e))
   }
 }
 
-export {fire, firebase}
+export { fire, firebase }

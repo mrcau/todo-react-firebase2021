@@ -13,17 +13,19 @@ function LoginModal({ fireApp, setUserName, setLoginModal,firebase }) {
   const [registerTF, setRegisterTF] = useState(false);
 
   // 이메일로그인
-  const emailLogin = () => {
+  const emailLogin = (e) => {
+    e.preventDefault();
     const email = emailRef.current.value;
     const pass = passRef.current.value;
-    fireApp.emailLogin(email, pass)
-      .then((user) => {
-        console.log('success');
-      })
-      .catch((error) => {
-        var errorMessage = error.message;
-        console.log(errorMessage);
-      });
+    fireApp.emailLogin(email,pass)
+    //   .then((user) => {
+    //     console.log('success');
+    //   })
+    //   .catch((error) => {
+    //     var errorMessage = error.message;
+    //     console.log(errorMessage);
+    //   });
+    // console.log(email,pass);
   }
 
   // 구글로그인
@@ -35,13 +37,20 @@ function LoginModal({ fireApp, setUserName, setLoginModal,firebase }) {
   // 회원가입
   const onSubmit = async (e) => {
     e.preventDefault();
-    const registerInfo = [emailRegisterRef.current.value, passRegisterRef.current.value]
-    const nameRegister = nameRegisterRef.current.value;
-    const cf = {displayName : ()=>setUserName(nameRegister), 
+    const registerInfo = {
+      name : nameRegisterRef.current.value,
+      email : emailRegisterRef.current.value, 
+      pass : passRegisterRef.current.value
+    }
+    const cf = {displayName : ()=>setUserName(registerInfo.name), 
                 closeModal : ()=>setLoginModal(false)}
-   await fireApp.createUser(registerInfo,nameRegister,cf);
- 
+   await fireApp.createUser(registerInfo,cf);
+   console.log('회원가입 완료');
+  //  await fireApp.save(registerInfo);
+  //  console.log('회원정보 저장 완료')
 }
+
+
   return (
     <div className="loginModal">
       {/* LoginModal */}

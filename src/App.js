@@ -11,6 +11,8 @@ function App({ fireApp, firebase }) {
   const [uid, setUid] = useState('');
   const [userName, setUserName] = useState('');
   const [loginModal, setLoginModal] = useState(false);
+  const [item, setItem] = useState({});
+  const [items, setItems] = useState({});
 
   useEffect(() => {
     fireApp.onAuth(e => {
@@ -18,20 +20,27 @@ function App({ fireApp, firebase }) {
         setuser(e);
         setUid(e.uid);
         setUserName(e.displayName);
+        setLoginModal(false)
       }
-      
-      setUserName(e.displayName);
       console.log(e);
     })
   }, [])
 
+  //DB에 데이터 저장
   const submit = (e) => {
     e.preventDefault();
-    const text = textRef.current.value;
-    const title = titleRef.current.value;
-    console.log(text, title);
-    textRef.current.value = '';
+    const item = {
+      uid : uid,
+      name : userName,
+      title : titleRef.current.value,
+      text : textRef.current.value
+    }
+    if(uid&&item.title){
+      console.log(item);
+      fireApp.itemSave(item);
+    }
     titleRef.current.value = '';
+    textRef.current.value = '';
   }
 
 
