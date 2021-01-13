@@ -25,11 +25,17 @@ function App({ fireApp, firebase }) {
         setUserName(e.displayName);
         setLoginModal(false);
 
-        fireApp.itemSync(e.uid, (data) => { //콜백
-          setItems(data);
-          setTodoCount(Object.keys(data).length)
-        })
-      }
+        const cf = {
+          cf1: (data) => {
+            data && setItems(data)
+            setTodoCount(Object.keys(data).length);
+          },
+          cf2: () => {setItems({}); setTodoCount(0)}
+        }
+
+        fireApp.itemSync(e.uid,cf);
+
+      } else { setItems({}) }
       console.log(e);
     })
   }, []);
@@ -43,7 +49,9 @@ function App({ fireApp, firebase }) {
       dataId: dataId,
       name: userName,
       title: titleRef.current.value,
-      text: textRef.current.value
+      text: textRef.current.value,
+      today: today,
+      progress:0
     }
     if (uid && data.title) {
       console.log(data);
@@ -63,7 +71,7 @@ function App({ fireApp, firebase }) {
 
   return (
     <div className="App">
-      <div className='header'>{userName} 오늘할일</div>
+      <div className='header'>{userName} 오늘할일 {todoCount}개</div>
       {uid ?
         <button className="btnSign btnLogout" onClick={logout}>Logout</button>
         :
@@ -72,12 +80,12 @@ function App({ fireApp, firebase }) {
       <div id='section'>
         <div id="items">
           {
-            // Object.keys(items).map((e) => {
-            //   <Itemrow  key={uid} item={items[e]} items={items}/>          
-            // })
-            <Itemrow  key={uid} item={items} items={items}/> 
+            Object.keys(items).map((e) => {
+              return <Itemrow key={e.dataId} item={items[e]} items={items} fireApp={fireApp} />
+            })
+            // <Itemrow  key={uid} item={items} items={items}/> 
           }
-          
+
         </div>
 
         <form onSubmit={submit}>

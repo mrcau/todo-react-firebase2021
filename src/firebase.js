@@ -13,7 +13,7 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 
 class fire {
-  
+
   //회원가입
   async createUser(info, cf) {
     try {
@@ -21,8 +21,8 @@ class fire {
         .createUserWithEmailAndPassword(info.email, info.pass)
         .then((e) => {
           firebase.database().ref(`auth/${e.user.uid}`).set(info)
-          .then(() => console.log('회원정보 저장성공'))
-          .catch((e) => console.log(e))
+            .then(() => console.log('회원정보 저장성공'))
+            .catch((e) => console.log(e))
         })
       await firebase.auth().currentUser.updateProfile({ displayName: info.name });
       cf.displayName();
@@ -58,19 +58,26 @@ class fire {
   }
   //회원정보 SYNC
   async onAuth(cf) {
-  firebase.auth().onAuthStateChanged(e => cf(e));
-
+    firebase.auth().onAuthStateChanged(e => cf(e));
   }
+
   // 데이터 SYNC
- itemSync(uid,cf){
+  itemSync(uid,cf) {
     const ref = firebase.database().ref(`items/${uid}`);
-    ref.on('value',(p) => {
+    ref.on('value', (p) => {
       const data = p.val();
-      data && cf(data)
+      data ? cf.cf1(data) :cf.cf2();
     })
-
   }
-
+  // 데이터 삭제
+  itemDel(uid,dataId){
+    firebase.database().ref(`items/${uid}/${dataId}`).remove();
+  }
+  // 데이터 업데이트
+  itemUp(uid,dataId,counter){
+    firebase.database().ref(`items/${uid}/${dataId}`)
+    .update({progress:counter})
+  }
 
 }
 
