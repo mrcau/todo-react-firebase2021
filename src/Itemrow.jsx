@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { memo } from 'react';
+import ProgressBar from 'react-bootstrap/ProgressBar'
 
-function Itemrow({item,items,fireApp}) {
+function  Itemrow ({item,items,fireApp}) {
   
   let counter = item.progress;
   const itemDel=() => {
@@ -13,12 +14,14 @@ function Itemrow({item,items,fireApp}) {
   const minus = () => {
     counter>0&&counter--;
     fireApp.itemUp(item.uid,item.dataId,counter)
-    
   }
+  const now = item.progress*10;
   return (
     <div className="itemrow">
       <div className="theader">
-        {item.today}
+        <div className="headerToday">{item.today}</div> 
+        <ProgressBar animated  now={now}  variant="warning"
+          style={{height:"12px"}} className="headerProgress"/>
       </div>
       <div className="title">
         {item.title}
@@ -36,4 +39,4 @@ function Itemrow({item,items,fireApp}) {
   );
 }
 
-export default Itemrow;
+export default memo(Itemrow);

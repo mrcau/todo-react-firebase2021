@@ -1,4 +1,8 @@
-import firebase from 'firebase';
+import firebase from 'firebase/app';
+import "firebase/auth";
+import "firebase/database";
+import "firebase/storage";
+
 
 const firebaseConfig = {
   apiKey: "AIzaSyCOnkl6bOYp81xFnYkKXTNkcrb2jP-QQrk",
@@ -66,7 +70,7 @@ class fire {
     const ref = firebase.database().ref(`items/${uid}`);
     ref.on('value', (p) => {
       const data = p.val();
-      data ? cf.cf1(data) :cf.cf2();
+      data ? cf.f1(data) :cf.f2();
     })
   }
   // 데이터 삭제
@@ -81,4 +85,4 @@ class fire {
 
 }
 
-export { fire, firebase }
+export { fire}

@@ -1,9 +1,7 @@
-import React, { useRef, useState } from 'react';
+import React, { memo, useRef, useState } from 'react';
 import { Button, Form } from 'react-bootstrap';
-import { useForm } from 'react-hook-form';
 
-
-function LoginModal({ fireApp, setUserName, setLoginModal,firebase }) {
+function LoginModal({ fireApp, setUserName, setLoginModal }) {
   const emailRef = useRef();
   const passRef = useRef();
   const emailRegisterRef = useRef();
@@ -46,7 +44,6 @@ function LoginModal({ fireApp, setUserName, setLoginModal,firebase }) {
                 closeModal : ()=>setLoginModal(false)}
    fireApp.createUser(registerInfo,cf)
 }
-
   return (
     <div className="loginModal">
       {/* LoginModal */}
@@ -54,7 +51,7 @@ function LoginModal({ fireApp, setUserName, setLoginModal,firebase }) {
         <div className="auth">
         <h4>로그인</h4>
           <Form onSubmit={emailLogin}>
-            <Form.Group controlId="formBasicEmail" className="formGroup" >
+            <Form.Group controlId="formBasicEmailLogin" className="formGroup" >
               <Form.Label className="formLabel"><i className="far fa-envelope" /></Form.Label>
               <Form.Control className="formInput" type="email" ref={emailRef} placeholder="이메일" />
             </Form.Group>
@@ -75,7 +72,7 @@ function LoginModal({ fireApp, setUserName, setLoginModal,firebase }) {
       <div className="auth" style={{ display: !registerTF && 'none' }}>
       <h4>회원가입</h4>
         <Form onSubmit={onSubmit}>
-          <Form.Group controlId="formBasicEmail" className="formGroup" >
+          <Form.Group controlId="formBasicName" className="formGroup" >
             <Form.Label className="formLabel"><i className="far fa-smile" /></Form.Label>
             <Form.Control className="formInput" type="text" ref={nameRegisterRef} placeholder="이름" />
           </Form.Group>
@@ -83,11 +80,11 @@ function LoginModal({ fireApp, setUserName, setLoginModal,firebase }) {
             <Form.Label className="formLabel"><i className="far fa-envelope" /></Form.Label>
             <Form.Control className="formInput" type="email" ref={emailRegisterRef} placeholder="이메일" />
           </Form.Group>
-          <Form.Group controlId="formBasicPassword" className="formGroup" >
+          <Form.Group controlId="formBasicPassword1" className="formGroup" >
             <Form.Label className="formLabel"><i className="fas fa-unlock-alt" /></Form.Label>
             <Form.Control className="formInput" type="password"ref={passRegisterRef} placeholder="패스워드" />
           </Form.Group>
-          <Form.Group controlId="formBasicPassword" className="formGroup" >
+          <Form.Group controlId="formBasicPassword2" className="formGroup" >
             <Form.Label className="formLabel"><i className="fas fa-unlock-alt" /></Form.Label>
             <Form.Control className="formInput" type="password"ref={repassRegisterRef} placeholder="패스워드 확인" />
           </Form.Group>
@@ -105,4 +102,4 @@ function LoginModal({ fireApp, setUserName, setLoginModal,firebase }) {
   );
 }
 
-export default LoginModal;
+export default memo(LoginModal);

@@ -5,9 +5,10 @@ import LoginModal from './LoginModal';
 import Itemrow from './Itemrow';
 
 
-function App({ fireApp, firebase }) {
+function App({ fireApp }) {
   const textRef = useRef();
   const titleRef = useRef();
+  const rocketRef = useRef();
   // const [user, setuser] = useState({});
   const [uid, setUid] = useState('');
   const [userName, setUserName] = useState('');
@@ -20,25 +21,24 @@ function App({ fireApp, firebase }) {
   // 로그인 / 데이터 보여주기 싱크
   useEffect(() => {
     fireApp.onAuth((e) => {
+      const cf = {
+        f1: (data) => {
+          data && setItems(data)
+          setTodoCount(Object.keys(data).length);
+        },
+        f2: () => { setItems({}); setTodoCount(0); setTodoCount(0) }
+      }
+
       if (e) {
         setUid(e.uid);
         setUserName(e.displayName);
         setLoginModal(false);
 
-        const cf = {
-          cf1: (data) => {
-            data && setItems(data)
-            setTodoCount(Object.keys(data).length);
-          },
-          cf2: () => {setItems({}); setTodoCount(0)}
-        }
+        fireApp.itemSync(e.uid, cf);
 
-        fireApp.itemSync(e.uid,cf);
-
-      } else { setItems({}) }
-      console.log(e);
+      } else { cf.f2() }
     })
-  }, []);
+  }, [fireApp]);
 
   //DB에 글 데이터 저장
   const submit = (e) => {
@@ -51,10 +51,9 @@ function App({ fireApp, firebase }) {
       title: titleRef.current.value,
       text: textRef.current.value,
       today: today,
-      progress:0
+      progress: 0
     }
     if (uid && data.title) {
-      console.log(data);
       fireApp.dataSave(data);
     }
     titleRef.current.value = '';
@@ -69,6 +68,13 @@ function App({ fireApp, firebase }) {
     setUid('');
   }
 
+  const rocketOn = () => {
+    rocketRef.current.classList.add("rocketOn");
+    setTimeout(() => {
+      rocketRef.current.classList.remove("rocketOn");
+      clearTimeout(rocketOn);
+    }, 300);
+  }
   return (
     <div className="App">
       <div className='header'>{userName} 오늘할일 {todoCount}개</div>
@@ -81,7 +87,7 @@ function App({ fireApp, firebase }) {
         <div id="items">
           {
             Object.keys(items).map((e) => {
-              return <Itemrow key={e.dataId} item={items[e]} items={items} fireApp={fireApp} />
+              return <Itemrow key={e} item={items[e]} items={items} fireApp={fireApp} />
             })
             // <Itemrow  key={uid} item={items} items={items}/> 
           }
@@ -89,16 +95,17 @@ function App({ fireApp, firebase }) {
         </div>
 
         <form onSubmit={submit}>
-          <input type="text" ref={titleRef} />
-          <button className="btnadd" >
-            <span className="rocket">🚀</span>추가</button>
-          <textarea ref={textRef} cols="30" rows="2"></textarea>
+          <input type="text" ref={titleRef} className="inputTitle" />
+
+          <button className="btnadd" onClick={rocketOn} style={{ outline: "none", border: "none" }} >
+            <span className="rocket" ref={rocketRef}  >🚀</span>  추가</button>
+          <textarea className="textarea" ref={textRef} cols="30" rows="2" ></textarea>
         </form>
 
       </div>
       <div className='footer'>Togo Factory</div>
       {
-        loginModal && <LoginModal fireApp={fireApp} firebase={firebase} setLoginModal={setLoginModal} setUserName={setUserName} />
+        loginModal && <LoginModal fireApp={fireApp} setLoginModal={setLoginModal} setUserName={setUserName} />
       }
     </div>
   );
