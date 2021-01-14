@@ -88,7 +88,7 @@ function App({ fireApp }) {
   };
   const list = (anchor) => (
     // <div onClick={toggleDrawer(anchor, false)}>
-      <LeftMenu logoUrl={logoUrl} user={user}/>
+      <LeftMenu logoUrl={logoUrl} user={user} fireApp={fireApp} setLogoUrl={setLogoUrl}/>
     // </div>
   );
 

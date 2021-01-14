@@ -12,6 +12,7 @@
     "antd": "^4.10.2",
     "bootstrap": "^4.5.3",
     "firebase": "^8.2.2",
+    "mime-types": "^2.1.28",
     "node-sass": "^5.0.0",
     "react": "^17.0.1",
     "react-bootstrap": "^1.4.3",

@@ -82,7 +82,20 @@ class fire {
     firebase.database().ref(`items/${uid}/${dataId}`)
     .update({progress:counter})
   }
+  // 자료저장
+  async imgUpload(uid,file,metaData,cf){
+    try{
+      const e = await firebase.storage().ref(`img/${uid}`).put(file,metaData)
+      const downloadUrl = await e.ref.getDownloadURL();
+       firebase.auth().currentUser.updateProfile({ photoURL: downloadUrl });
+     cf(downloadUrl);
+    }
+    catch(error){
+      console.log(error)
+    }     
+    
+  }
 
 }
 
-export { fire}
+export {fire}
