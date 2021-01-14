@@ -39,7 +39,6 @@ function App({ fireApp }) {
       } else { cf.f2() }
     })
   }, [fireApp]);
-
   //DB에 글 데이터 저장
   const submit = (e) => {
     e.preventDefault();
@@ -59,15 +58,14 @@ function App({ fireApp }) {
     titleRef.current.value = '';
     textRef.current.value = '';
   }
-
-
+  //로그아웃
   const logout = async () => {
     fireApp.logout();
     // setuser({});
     setUserName('');
     setUid('');
   }
-
+  //로켓발사
   const rocketOn = () => {
     rocketRef.current.classList.add("rocketOn");
     setTimeout(() => {
@@ -75,6 +73,7 @@ function App({ fireApp }) {
       clearTimeout(rocketOn);
     }, 300);
   }
+  //본문
   return (
     <div className="App">
       <div className='header'>{userName} 오늘할일 {todoCount}개</div>
