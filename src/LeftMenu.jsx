@@ -19,8 +19,7 @@ const useStyles = makeStyles((theme) => ({
 
 function LeftMenu({ logoUrl, setLogoUrl, user,fireApp }) {
   const classes = useStyles();
-  const [userInfo, setUserInfo] = useState('');
-  const [email, setEmail] = useState(user.email);
+  const email =user.email;
   const [logo, setlogo] = useState(logoUrl)
   // console.log(user);
   const upLoad = (e) => {

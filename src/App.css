@@ -40,8 +40,7 @@ html {
 .rightMenu{
   width: 80px;
 }
-.btnSign {
-}
+
 #section {
   flex: auto;
   display: flex ;
