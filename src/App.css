@@ -1,6 +1,6 @@
 html {
-  --Acolor: #343148;
-  --Bcolor: #d7c49e;
+  --Acolor: #0A174E;
+  --Bcolor :#F5D042;
 }
 * {
   box-sizing: border-box;
@@ -20,25 +20,27 @@ html {
   flex-direction: column;
   border: 2px solid var(--Acolor);
   overflow: hidden;
-  /* top: 50%; */
-  /* left: 50%; */
-  /* margin: auto; */
-  /* border-radius: 1rem; */
-  /* transform: translateX(-50%) translateY(-50%); */  
 }
 .header {
-  /* padding-bottom: 0.3rem; */
   font-weight: bold;
   color: var(--Bcolor);
   font-size: 18px;
   background: var(--Acolor);
-  /* border-radius: 0 0 12px 12px; */
   width: 100%;
   margin: auto;
-  /* margin-bottom: 10px; */
   height: 30px;
-  display: table-cell;
-  vertical-align: middle;
+  display:flex;
+}
+.leftMenu{
+  width:50px;
+}
+.centerTitle{
+  flex:auto;
+}
+.rightMenu{
+  width: 80px;
+}
+.btnSign {
 }
 #section {
   flex: auto;
@@ -185,8 +187,8 @@ button {
   font-weight: 900;
   font-size: 14px;
   color: var(--Bcolor);
-  border: none;
-  outline: none;
+  border: none !important;
+  outline: none !important;
   width: 100%;
   cursor: pointer;
   transition: all 300ms;
@@ -249,17 +251,7 @@ form {
 
 
 /* 메인화면 로고/로그인 버튼 */
-.btnSign {
-  width: 70px;
-  background: var(--Acolor);
-  color: var(--Bcolor);
-  border-radius: 8px;
-  border: 2px solid var(--Acolor);
-  position: absolute;
-  /* top: 3px; */
-  right: 1px;
-  padding-bottom: 1px;
-}
+
 .today {
   width: 80px;
   height: 30px;
